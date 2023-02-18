@@ -1,0 +1,19 @@
+[package]
+name = "pbrt"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+glam = "0.22.0"
+rand="0.8.5"
+image="0.24.5"
+log="0.4.17"
+log4rs="1.2.0"
+serde_json = "1.0"
+serde = { version = "1.0"}
+pbr="1.0.4"
+rtbvh = "0.6.2"
+lazy_static="*"
+obj = "0.10.2"

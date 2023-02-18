@@ -1,0 +1,35 @@
+[33mcommit 6428b9a264b03f4f82719f7cbaf546d690520682[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: [1;31mchen[m <15305067103@163.com>
+Date:   Sun Jan 15 10:49:59 2023 +0800
+
+    路径追踪积分器
+
+[33mcommit 831419e60e577fbda8e934118d81d4c9efde6833[m
+Author: [1;31mchen[m <15305067103@163.com>
+Date:   Fri Jan 13 14:32:23 2023 +0800
+
+    透视相机
+
+[33mcommit a3ebf154ee5f0a08bf73f0585d9f6922573457e2[m
+Author: [1;31mchen[m <15305067103@163.com>
+Date:   Thu Jan 12 22:31:41 2023 +0800
+
+    使用别人的bvh
+
+[33mcommit 60fd6453d51cbb8fd4e5b87eb355c64db42cc3f8[m
+Author: [1;31mchen[m <15305067103@163.com>
+Date:   Sun Jan 8 09:06:34 2023 +0800
+
+    多线程渲染
+
+[33mcommit ca242252c4e6391498e59db2336daad3ce3739b6[m
+Author: [1;31mchen[m <15305067103@163.com>
+Date:   Sun Jan 8 09:06:17 2023 +0800
+
+    多线程渲染
+
+[33mcommit 623c3133691b7d006d617755cfa2f6f078374bf5[m
+Author: [1;31mchen[m <15305067103@163.com>
+Date:   Thu Jan 5 17:53:44 2023 +0800
+
+    测试正交投影相机无问题
