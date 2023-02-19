@@ -22,10 +22,10 @@ pub enum Shape {
 impl Shape {
     pub fn build_json(json: &serde_json::Map<String, Value>) -> Self {
         let t = json["mode"].as_str().map(|mode| {
-            if mode.contains("shape") {
+            if mode.contains("shpere") {
                 Shape::Shpere(Shpere::build(json))
             } else {
-                Shape::Shpere(Shpere::build(json))
+                unimplemented!()
             }
         });
         t.unwrap()

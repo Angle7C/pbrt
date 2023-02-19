@@ -33,7 +33,8 @@ impl Light {
             if mode.contains("Point"){
                 Light::Point(PointLight::build_json(json))
             }else{
-                Light::Point(PointLight::build_json(json))
+                // Light::Point(PointLight::build_json(json))
+                unimplemented!()
             }
         }).unwrap()
     }
