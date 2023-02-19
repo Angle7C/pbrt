@@ -12,6 +12,8 @@ pub enum TextureMapping2D {
 pub trait Texture<T> {
     fn evaluate(&self,inter:&Interaction)->T;    
 }
+#[allow(unused)]
+
 pub enum TextureMapping3D {
 
 }

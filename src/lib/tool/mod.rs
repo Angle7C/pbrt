@@ -78,7 +78,7 @@ pub fn uniform_disk()->Vec3{
     let xie=rand::random::<f32>()*2.0*PI;
     let (sin,cos)=xie.sin_cos();
     let (x,y)=(r*cos,r*sin);
-    let dir=Vec3::new(x,y,(1.0-x*x-y*y).sqrt());
-    dir
+    
+    Vec3::new(x,y,(1.0-x*x-y*y).sqrt())
 
 }

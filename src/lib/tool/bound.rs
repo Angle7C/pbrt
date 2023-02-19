@@ -28,7 +28,7 @@ impl Bound3 {
     pub fn merage(&self, other: &Self) -> Self {
         let min = self.min.min(other.min);
         let max = self.max.max(other.max);
-        Self { min: min, max: max }
+        Self {  min,  max }
     }
     pub fn grow(&self,point:Vec3)->Self{
         let min=self.min.min(point);
@@ -83,6 +83,6 @@ impl Bound2 {
     pub fn merage(&self, other: Self) -> Self {
         let min = self.min.min(other.min).min(other.max);
         let max = self.max.max(other.min).max(other.max);
-        Self { min: min, max: max }
+        Self { min, max }
     }
 }

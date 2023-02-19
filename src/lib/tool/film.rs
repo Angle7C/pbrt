@@ -57,9 +57,9 @@ pub struct FilmIter {
 impl FilmIter {
     pub fn new(left_up:(u32,u32),right_down:(u32,u32),block_size:(u32,u32)) -> Self {
         Self {
-            left_up:left_up,
-            right_down:right_down,
-            block_size:block_size,
+            left_up,
+            right_down,
+            block_size,
             now:left_up
         }
     }

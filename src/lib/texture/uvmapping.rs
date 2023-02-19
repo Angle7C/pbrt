@@ -1,6 +1,7 @@
 use glam::Vec2;
 
 use crate::lib::tool::interaction::Interaction;
+#[allow(unused)]
 
 pub struct UVMapping {
     su: f32,
@@ -8,6 +9,8 @@ pub struct UVMapping {
     du: f32,
     dv: f32,
 }
+#[allow(unused)]
+
 impl UVMapping {
     pub fn new(su: f32, sv: f32, du: f32, dv: f32) -> Self {
         Self { su, sv, du, dv }

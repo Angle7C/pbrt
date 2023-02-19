@@ -105,8 +105,8 @@ impl SpecularReflection {
                 eta_i: eta_a,
                 eta_t: eta_b,
             },
-            mode: mode,
-            sc_opt: sc_opt,
+            mode,
+            sc_opt,
         }
     }
     pub fn f(&self, wo: Vec3, wi: Vec3) -> SampleBSDF {
@@ -147,7 +147,7 @@ impl SpecularReflection {
         }
     }
     pub fn get_type(&self) -> u8 {
-        BxdfType::TRANSMISSION as u8 | BxdfType::SPECULAR as u8
+        BxdfType::Transmission as u8 | BxdfType::Specular as u8
     }
 }
 #[allow(unused)]
@@ -192,13 +192,13 @@ impl FrensnelSpecular {
         todo!()
     }
     pub fn get_type(&self) -> u8 {
-        BxdfType::REFLECTION as u8 | BxdfType::TRANSMISSION as u8 | BxdfType::SPECULAR as u8
+        BxdfType::Reflection as u8 | BxdfType::Transmission as u8 | BxdfType::Specular as u8
     }
 }
 #[allow(unused)]
 impl LambertianReflection {
     pub fn new(r: Vec3) -> Self {
-        Self { r: r }
+        Self { r }
     }
     pub fn f(&self, _wo: Vec3, _wi: Vec3) -> SampleBSDF {
         let mut bsdf = SampleBSDF::default();
@@ -219,7 +219,7 @@ impl LambertianReflection {
         }
     }
     pub fn get_type(&self) -> u8 {
-        BxdfType::DIFFUSE as u8 | BxdfType::REFLECTION as u8
+        BxdfType::Diffuse as u8 | BxdfType::Reflection as u8
     }
 }
 pub fn fr_dielectric(cos_theta_i: f32, eta_i: f32, eta_t: f32) -> f32 {

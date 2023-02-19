@@ -4,6 +4,8 @@ use crate::lib::{shape::Shape, tool::{bound::Bound3, interaction::Interaction}, 
 use rtbvh::Primitive as OtherPrimitive;
 
 use super::{Aggregate, Primitive as MyPrimitive};
+#[allow(clippy::upper_case_acronyms)]
+
 pub struct BVH{
     bvh:Bvh,
     shapes:Vec<Shape>,

@@ -1,9 +1,9 @@
-use super::{CameraSample, parse_camera_2d_param, parse_mat_camera};
 #[allow(unused)]
 use super::{compute_screen_to_raster, Camera};
-use crate::lib::{tool::{parse_1d_param_f32}};
+use super::{parse_camera_2d_param, parse_mat_camera, CameraSample};
 #[allow(unused_imports)]
 use crate::lib::tool::log_init;
+use crate::lib::tool::parse_1d_param_f32;
 #[allow(unused)]
 use crate::lib::{
     ray::Ray,
@@ -50,14 +50,14 @@ impl Default for Perspective {
         let screen_to_raster =
             compute_screen_to_raster(Bound2::new(Vec2::NEG_ONE, Vec2::ONE), (512, 512));
         let camera_to_screen =
-            Tranform::from_mat4(Mat4::perspective_infinite_lh(90.0, 1.0, 10000.0 ));
+            Tranform::from_mat4(Mat4::perspective_infinite_lh(90.0, 1.0, 10000.0));
         let raster_to_camera = camera_to_screen.inverse() * screen_to_raster.inverse();
         Self {
             dx_camera: raster_to_camera.tranform_vector3(Vec3::X),
             dy_camera: raster_to_camera.tranform_vector3(Vec3::Y),
             camera_to_world: Tranform::from_mat4(Mat4::IDENTITY),
-            screen_to_raster: screen_to_raster,
-            raster_to_camera: raster_to_camera,
+            screen_to_raster,
+            raster_to_camera,
             lens_radius: 1.0,
             focal_distance: 1.0,
             size: (512, 512),
@@ -68,26 +68,29 @@ impl Default for Perspective {
 impl Perspective {
     pub fn new(
         camera_to_world: Mat4,
-        fov:f32,
+        fov: f32,
         screen_window: Bound2,
         lens_radius: f32,
         focal_distance: f32,
         size: (u32, u32),
     ) -> Self {
         let screen_to_raster = compute_screen_to_raster(screen_window, size);
-        let camera_to_screen =
-            Tranform::from_mat4(Mat4::perspective_infinite_lh(fov, size.0 as f32/size.1 as f32, 10000.0 ));
+        let camera_to_screen = Tranform::from_mat4(Mat4::perspective_infinite_lh(
+            fov,
+            size.0 as f32 / size.1 as f32,
+            10000.0,
+        ));
         let raster_to_camera = camera_to_screen.inverse() * screen_to_raster.inverse();
 
         Self {
             dx_camera: raster_to_camera.tranform_vector3(Vec3::X),
             dy_camera: raster_to_camera.tranform_vector3(Vec3::Y),
             camera_to_world: Tranform::from_mat4(camera_to_world),
-            screen_to_raster: screen_to_raster,
-            raster_to_camera: raster_to_camera,
-            lens_radius: lens_radius,
-            focal_distance: focal_distance,
-            size: size,
+            screen_to_raster,
+            raster_to_camera,
+            lens_radius,
+            focal_distance,
+            size,
         }
     }
 
@@ -106,14 +109,13 @@ impl Perspective {
     }
 }
 
-impl Perspective{
-    pub fn build_json(camera:&Map<String,Value>)->Self{
+impl Perspective {
+    pub fn build_json(camera: &Map<String, Value>) -> Self {
         let mat4 = parse_mat_camera(camera);
-        let focal_distance=parse_1d_param_f32(camera,"focal_distance");
-        let lens_radius=parse_1d_param_f32(camera, "lens_radius");
-        let (bound,size)=parse_camera_2d_param(camera);
-        let fov=parse_1d_param_f32(camera, "fov");
+        let focal_distance = parse_1d_param_f32(camera, "focal_distance");
+        let lens_radius = parse_1d_param_f32(camera, "lens_radius");
+        let (bound, size) = parse_camera_2d_param(camera);
+        let fov = parse_1d_param_f32(camera, "fov");
         Self::new(mat4, fov, bound, lens_radius, focal_distance, size)
     }
-
 }

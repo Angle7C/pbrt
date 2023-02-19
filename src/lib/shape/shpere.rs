@@ -54,7 +54,7 @@ impl Shpere {
             theta_min: (zmin / radis).clamp(-1.0, 1.0).acos(),
             theta_max: (zmax / radis).clamp(-1.0, 1.0).acos(),
             phi_max: phi_max.clamp(0.0, 360.0).to_radians(),
-            material:material
+            material
         }
     }
     //Json创建

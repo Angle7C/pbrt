@@ -1,6 +1,8 @@
 use glam::Vec3;
 
 use crate::lib::tool::interaction::Interaction;
+#[allow(unused)]
+
 #[derive(Debug,Clone, Copy)]
 pub struct Matte{
     //反射值，
@@ -14,11 +16,13 @@ pub struct Matte{
         bump_map: bump材质
     */
 }
+#[allow(unused)]
+
 impl Matte{
     pub fn new()->Self{
         todo!()
     }
     pub fn scattering(&self,inter:&Interaction){
-
+        unimplemented!()
     }
 }

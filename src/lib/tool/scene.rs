@@ -6,7 +6,7 @@ use std::{
 use glam::{Mat4, Vec2, Vec3};
 use image::RgbImage;
 use log::error;
-use obj::{IndexTuple, LoadConfig, ObjData};
+use obj::{IndexTuple, ObjData};
 use rand::Rng;
 use serde_json::Value;
 
@@ -15,7 +15,7 @@ use crate::lib::{
     light::Light,
     primitive::{build_aggregate, Aggregate, AggregateType, Primitive},
     ray::Ray,
-    shape::{shpere::Shpere, Shape, triangle::Triangle},
+    shape::{shpere::Shpere, triangle::Triangle, Shape},
 };
 
 use super::{
@@ -59,7 +59,7 @@ impl Sence {
             for item in &shapes {
                 bound = bound.merage(&item.world_bound());
             }
-            let aggregate = build_aggregate(AggregateType::BVH, shapes);
+            let aggregate = build_aggregate(AggregateType::Bvh, shapes);
             let mut t = Self {
                 camera,
                 lights,
@@ -71,7 +71,7 @@ impl Sence {
             error!("读取文件失败 {}", path);
             panic!("读取文件失败 {}", path);
         };
-        return sence;
+        sence
     }
     pub fn rand_read(light_num: u32, shape_num: u32) -> Self {
         let camera = Camera::Orthographic(Orthographic::new(
@@ -106,10 +106,10 @@ impl Sence {
             bound = bound.merage(&item.world_bound());
         }
         Self {
-            aggregate: Some(build_aggregate(AggregateType::BVH, shapes)),
-            camera: camera,
+            aggregate: Some(build_aggregate(AggregateType::Bvh, shapes)),
+            camera,
             lights: vec![],
-            bound: bound,
+            bound,
         }
     }
     //创建图片
@@ -174,7 +174,7 @@ impl Sence {
         //遍历模型
         for obj in &model.objects {
             //遍历每一个面集合
-            let mut vec=Vec::new();
+            let mut vec = Vec::new();
             for item in &obj.groups {
                 for ploy in &item.polys {
                     let mut pos = [Vec3::ZERO; 3];
@@ -196,7 +196,7 @@ impl Sence {
                             Vec3::Z
                         };
                     }
-                    vec.push(Triangle::new(pos,n,uv))
+                    vec.push(Triangle::new(pos, n, uv))
                 }
             }
         }

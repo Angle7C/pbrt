@@ -30,7 +30,7 @@ impl PointLight {
     pub fn new(pos: Vec3, i: Vec3) -> Self {
         Self {
             p_light: pos,
-            i: i,
+            i,
         }
     }
     pub fn power(&self) -> Vec3 {

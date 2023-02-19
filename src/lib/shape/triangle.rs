@@ -1,4 +1,5 @@
 use glam::{Vec2, Vec3};
+#[allow(unused)]
 
 pub struct Triangle {
     point: [Vec3; 3],

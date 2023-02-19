@@ -25,7 +25,7 @@ pub trait Aggregate:Sync {
     }
 }
 pub enum AggregateType{
-    BVH,
+    Bvh,
 
 }
 struct AggregateDefault;
@@ -40,7 +40,7 @@ impl Aggregate for AggregateDefault{
 }
 pub fn build_aggregate(types:AggregateType,builder:Vec<Shape>)-> Box<dyn Aggregate>{ 
        match types {
-            AggregateType::BVH=>{
+            AggregateType::Bvh=>{
                 Box::new( BVH::build(builder))
             }
         }

@@ -65,11 +65,11 @@ impl Mul<Tranform> for Tranform {
 #[allow(unused)]
 impl Tranform {
     pub fn new(m: Mat4, inv_m: Mat4) -> Self {
-        Self { m: m, inv_m: inv_m }
+        Self {  m, inv_m }
     }
     pub fn from_mat4(m: Mat4) -> Self {
         Self {
-            m: m,
+        m,
             inv_m: m.inverse(),
         }
     }
@@ -77,7 +77,7 @@ impl Tranform {
     pub fn from_translation(det: Vec3) -> Self {
         let m = Mat4::from_translation(det);
         Self {
-            m: m,
+            m,
             inv_m: m.inverse(),
         }
     }
@@ -85,7 +85,7 @@ impl Tranform {
     pub fn from_scale(scale: Vec3) -> Self {
         let m = Mat4::from_scale(scale);
         Self {
-            m: m,
+             m,
             inv_m: m.inverse(),
         }
     }
@@ -93,7 +93,7 @@ impl Tranform {
     pub fn from_rotation_x(angle: f32) -> Self {
         let m = Mat4::from_rotation_x(angle.to_radians());
         Self {
-            m: m,
+             m,
             inv_m: m.inverse(),
         }
     }
@@ -101,7 +101,7 @@ impl Tranform {
     pub fn from_rotation_y(angle: f32) -> Self {
         let m = Mat4::from_rotation_y(angle.to_radians());
         Self {
-            m: m,
+            m,
             inv_m: m.inverse(),
         }
     }
@@ -109,7 +109,7 @@ impl Tranform {
     pub fn from_rotation_z(angle: f32) -> Self {
         let m = Mat4::from_rotation_z(angle.to_radians());
         Self {
-            m: m,
+             m,
             inv_m: m.inverse(),
         }
     }
@@ -117,7 +117,7 @@ impl Tranform {
     pub fn from_rotation_axis(axis: &Vec3, angle: f32) -> Self {
         let m = Mat4::from_axis_angle(*axis, angle);
         Self {
-            m: m,
+             m,
             inv_m: m.inverse(),
         }
     }
@@ -133,7 +133,7 @@ impl Tranform {
             pos.extend(1.0),
         );
         Self {
-            m: m,
+             m,
             inv_m: m.inverse(),
         }
     }

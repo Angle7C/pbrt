@@ -8,7 +8,7 @@ use super::{
     tool::{
         bound::Bound2,
         parse_1d_param_str, parse_vec3,
-        tranform::{self, Tranform},
+        tranform::{Tranform},
     },
 };
 
@@ -43,8 +43,8 @@ impl Default for CameraSample {
 impl CameraSample {
     pub fn new(p_film: Vec2, p_lens: Vec2) -> Self {
         Self {
-            p_film: p_film,
-            p_lens: p_lens,
+            p_film,
+            p_lens,
         }
     }
 }

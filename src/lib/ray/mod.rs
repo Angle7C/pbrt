@@ -15,7 +15,7 @@ impl PartialEq for Ray{
 #[allow(unused)]
 impl Ray {
     pub fn new(origin:Vec3,dir:Vec3)->Self{
-        Self { origin: origin, dir: dir.normalize(),t_max:f32::INFINITY,t_min:0.0 }
+        Self { origin, dir: dir.normalize(),t_max:f32::INFINITY,t_min:0.0 }
     }
     pub fn at(&self,t:f32)->Vec3{
         self.origin+self.dir*t
@@ -24,7 +24,7 @@ impl Ray {
         rtbvh::Ray::new(self.origin, self.dir)
     }
     pub fn from_with_t(origin:Vec3,dir:Vec3,t_min:f32,t_max:f32)->Self{
-        Self { origin: origin, dir: dir.normalize(),t_max:t_max,t_min:t_min }
+        Self { origin, dir: dir.normalize(),t_max,t_min }
 
     }
 }

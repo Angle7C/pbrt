@@ -1,6 +1,5 @@
-use std::{io::{BufRead, BufReader}, fs::File};
+use std::{io::{ BufReader}, fs::File};
 
-use lib::{tool::{scene::Sence, log_init}, integrator::path::PathIntegrator};
 use obj::ObjData;
 
 

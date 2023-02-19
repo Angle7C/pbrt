@@ -7,7 +7,6 @@ use crate::lib::{
     tool::{film::Film, interaction::Interaction, log_init, scene::Sence, THREAD_NUM},
 };
 use glam::{Vec2, Vec3};
-use image::imageops::colorops;
 #[allow(unused)]
 use std::{
     sync::{
@@ -20,6 +19,8 @@ use std::{
 
 use super::to_color;
 //俄罗斯轮盘的路径追踪
+#[allow(unused)]
+
 pub struct PathIntegrator<const N: usize> {
     //被终止的概率
     q: f32,
@@ -50,7 +51,7 @@ impl<const N: usize> PathIntegrator<N> {
     #[inline]
     //终止求解
     fn is_next(&self, p: f32, dept: &mut usize) -> Option<f32> {
-        *dept = *dept + 1;
+        *dept += 1;
         if *dept > self.max_path {
             // if p > self.q {
             //     None
@@ -71,12 +72,12 @@ impl<const N: usize> PathIntegrator<N> {
         let mut stack: Vec<Ray> = vec![];
         let mut color = if let Some(inter) = sence.intersect(&ray) {
             //直接光照
-            let direct_color = sence.direct_lighting(
+            
+            sence.direct_lighting(
                 &inter,
                 sence,
                 Vec2::new(sampler.sample_rand_1d(), sampler.sample_rand_1d()),
-            );
-            direct_color
+            )
         } else {
            return Vec3::ZERO;
         };
@@ -88,7 +89,7 @@ impl<const N: usize> PathIntegrator<N> {
                 //间接光照
                 color
                     * if let Some(bsdf) = inter.bsdf {
-                        let t = bsdf.f(ray.dir, BxdfType::ALL);
+                        let t = bsdf.f(ray.dir, BxdfType::All);
                         ray = Ray::new(inter.p, t.wi);
                         t.bsdf
                     } else {
@@ -135,7 +136,7 @@ impl<const N: usize> PathIntegrator<N> {
 #[test]
 pub fn test_path() {
     log_init();
-    let sence = Sence::read_json("F:/Dept/ray_track_weekend_rs/pbrt/sence/template.json");
-    let path = PathIntegrator::<32>::default();
+    let sence = Sence::read_json("D:\\Depot\\pbrt\\sence\\template.json");
+    let path = PathIntegrator::<64>::default();
     path.render(&sence, "tset_path_reflect");
 }

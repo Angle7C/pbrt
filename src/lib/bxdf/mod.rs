@@ -13,15 +13,15 @@ pub mod reflect;
 
 pub enum TransportMode {
     Radiance,
-    Importance
+    Importance,
 }
 impl PartialEq for TransportMode {
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {
             (TransportMode::Radiance, TransportMode::Radiance) => true,
             (TransportMode::Importance, TransportMode::Importance) => true,
-            _=>false
-            
+            (TransportMode::Radiance, TransportMode::Importance)
+            | (TransportMode::Importance, TransportMode::Radiance) => false,
         }
     }
 }
@@ -50,15 +50,15 @@ impl SampleBSDF {
     }
 }
 #[allow(unused)]
-#[derive(Clone,Copy, Debug)]
+#[derive(Clone, Copy, Debug)]
 
 pub enum BxdfType {
-    REFLECTION = 0,
-    TRANSMISSION = 1,
-    DIFFUSE = 2,
-    GLOSSY = 4,
-    SPECULAR = 8,
-    ALL = 15,
+    Reflection = 0,
+    Transmission = 1,
+    Diffuse = 2,
+    Glossy = 4,
+    Specular = 8,
+    All = 15,
 }
 #[derive(Clone, Debug)]
 #[allow(unused)]
@@ -72,8 +72,8 @@ pub enum Bxdf {
 impl Bxdf {
     fn match_type(&self, bxdf: BxdfType) -> bool {
         match self {
-            Self::SpecularReflection(specular) => (specular.get_type() | bxdf as u8) >0,
-            Self::LambertianReflection(lambertian) => (lambertian.get_type() | bxdf as u8) >0
+            Self::SpecularReflection(specular) => (specular.get_type() | bxdf as u8) > 0,
+            Self::LambertianReflection(lambertian) => (lambertian.get_type() | bxdf as u8) > 0,
         }
     }
     fn f(&self, wo: Vec3, wi: Vec3) -> SampleBSDF {
@@ -89,7 +89,7 @@ impl Bxdf {
     fn rho(&self) {}
     fn pdf(&self) {}
 }
-#[allow(unused)]
+#[allow(unused,clippy::upper_case_acronyms)]
 #[derive(Clone, Debug)]
 pub struct BSDF {
     pub eta: f32,
@@ -103,7 +103,7 @@ pub struct BSDF {
 impl BSDF {
     pub fn new(inter: &Interaction, eta: f32) -> Self {
         Self {
-            eta: eta,
+            eta,
             ns: inter.duv.shading.n,
             ng: inter.normal,
             ss: inter.duv.shading.dpdu.normalize(),
@@ -115,7 +115,7 @@ impl BSDF {
             bxdfs: vec![],
         }
     }
-    pub fn add_bxdf(&mut self,bxdf:Bxdf){
+    pub fn add_bxdf(&mut self, bxdf: Bxdf) {
         self.bxdfs.push(bxdf);
     }
     //通过bxdf返回 新方向，bsdf值，pdf
@@ -136,12 +136,10 @@ impl BSDF {
                 vec.push(item.f(wo, wi).bsdf)
             }
         }
-        let color:Vec3=vec.iter().sum();
-        let color=color/vec.len() as f32;
-        SampleBSDF::new(1.0,wi,color)
+        let color: Vec3 = vec.iter().sum();
+        let color = color / vec.len() as f32;
+        SampleBSDF::new(1.0, wi, color)
     }
 
-    pub fn shading_to_world(&self){
-
-    }
+    pub fn shading_to_world(&self) {}
 }

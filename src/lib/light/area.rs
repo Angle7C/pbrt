@@ -19,7 +19,7 @@ impl AreaLight {
         Self { lemit, shape, area:shape.get_area() }
     }
     pub fn power(&self) -> Vec3 {
-        return self.lemit*self.area*PI;
+        self.lemit*self.area*PI
     }
     pub fn l(&self,inter:&Interaction,w:Vec3)->Vec3{
         if inter.normal.dot(w)>0.0{self.lemit}else{Vec3::ZERO}

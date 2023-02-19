@@ -1,9 +1,9 @@
-use super::{CameraSample, parse_camera_2d_param, parse_mat_camera};
 #[allow(unused)]
 use super::{compute_screen_to_raster, Camera};
-use crate::lib::{ tool::{ parse_1d_param_f32}};
+use super::{parse_camera_2d_param, parse_mat_camera, CameraSample};
 #[allow(unused_imports)]
 use crate::lib::tool::log_init;
+use crate::lib::tool::parse_1d_param_f32;
 #[allow(unused)]
 use crate::lib::{
     ray::Ray,
@@ -20,7 +20,7 @@ use crate::lib::{
 use glam::{Mat4, Vec2, Vec3};
 #[allow(unused)]
 use image::RgbImage;
-use serde_json::{Value, Map};
+use serde_json::{Map, Value};
 #[allow(unused)]
 use std::sync::mpsc::{channel, Sender};
 #[allow(unused)]
@@ -57,22 +57,22 @@ impl Default for Orthographic {
             dx_camera: raster_to_camera.tranform_vector3(Vec3::X),
             dy_camera: raster_to_camera.tranform_vector3(Vec3::Y),
             camera_to_world: Tranform::from_mat4(Mat4::IDENTITY),
-            screen_to_raster: screen_to_raster,
-            raster_to_camera: raster_to_camera,
+            screen_to_raster,
+            raster_to_camera,
             lens_radius: 1.0,
             focal_distance: 1.0,
             size: (512, 512),
         }
     }
 }
-impl Orthographic{
-    pub fn build_json(camera:&Map<String,Value>)->Self{
+impl Orthographic {
+    pub fn build_json(camera: &Map<String, Value>) -> Self {
         let mat4 = parse_mat_camera(camera);
-        let focal_distance=parse_1d_param_f32(camera,"focal_distance");
-        let lens_radius=parse_1d_param_f32(camera, "lens_radius");
-        let (bound,size)=parse_camera_2d_param(camera);
-        let near=parse_1d_param_f32(camera, "near");
-        let far=parse_1d_param_f32(camera, "far");
+        let focal_distance = parse_1d_param_f32(camera, "focal_distance");
+        let lens_radius = parse_1d_param_f32(camera, "lens_radius");
+        let (bound, size) = parse_camera_2d_param(camera);
+        let near = parse_1d_param_f32(camera, "near");
+        let far = parse_1d_param_f32(camera, "far");
         Self::new(mat4, near, far, bound, lens_radius, focal_distance, size)
     }
 }
@@ -96,11 +96,11 @@ impl Orthographic {
             dx_camera: raster_to_camera.tranform_vector3(Vec3::X),
             dy_camera: raster_to_camera.tranform_vector3(Vec3::Y),
             camera_to_world: Tranform::from_mat4(camera_to_world),
-            screen_to_raster: screen_to_raster,
-            raster_to_camera: raster_to_camera,
-            lens_radius: lens_radius,
-            focal_distance: focal_distance,
-            size: size,
+            screen_to_raster,
+            raster_to_camera,
+            lens_radius,
+            focal_distance,
+            size,
         }
     }
 
@@ -119,9 +119,9 @@ impl Orthographic {
     }
 }
 #[test]
-fn test(){
-    let a=Orthographic::default();
-    let sample=CameraSample::new(Vec2::new(0.0, 0.0),Vec2::ZERO);
-    let a=a.generate_ray(sample);
-    println!("{:?}",a.0)
+fn test() {
+    let a = Orthographic::default();
+    let sample = CameraSample::new(Vec2::new(0.0, 0.0), Vec2::ZERO);
+    let a = a.generate_ray(sample);
+    println!("{:?}", a.0)
 }
